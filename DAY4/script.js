@@ -20,12 +20,13 @@ form.addEventListener("submit", (event) => {
 
   const value = input.value.trim();
 
-  if (value !== "") {
-    search.textContent = `검색한 영화: ${value}`;
-
-    // // 05.
-    input.value = "";
+  if (value === "") {
+    return;
   }
+  searchResult.textContent = `검색한 영화: ${value}`;
+
+  // // 05.
+  input.value = "";
 });
 
 // // 06.
