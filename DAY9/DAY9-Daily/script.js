@@ -14,7 +14,7 @@ const container = document.querySelector("#movie-list");
 function createMovieCard(movie) {
   // TODO 1. title, vote_average, poster_path를 구조 분해 할당으로 가져오세요.
 
-  const { title, vote_average, poster_path } = movie;
+  const { title, vote_average, poster_path, release_date } = movie;
 
   // TODO 2. movie-card 클래스를 가진 div 요소를 만드세요.
 
@@ -39,9 +39,19 @@ function createMovieCard(movie) {
   const voteEl = document.createElement("p");
   voteEl.textContent = `평점 ${vote_average}`;
 
+  // TODO 심화 01. 개봉일 요소 만들기
+
+  const releaseDate = document.createElement("p");
+
+  const releaseDateText = release_date
+    ? `개봉일 ${release_date}`
+    : "개봉일 정보 없음";
+
+  releaseDate.textContent = releaseDateText;
+
   // TODO 5. 만든 요소를 card에 추가하고 card를 반환하세요.
 
-  card.append(posterEl, titleEl, voteEl);
+  card.append(posterEl, titleEl, voteEl, releaseDate);
 
   return card;
 }
@@ -65,13 +75,19 @@ async function getTopRatedMovies() {
   const response = await fetch(URL, options);
   const data = await response.json();
 
+  // TODO 심화 02.
+
+  const filteredMovies = data.results.filter((filter) => {
+    return filter.vote_average >= 8;
+  });
+
   // TODO 8. Loading 문구를 지우세요.
 
   container.textContent = "";
 
   // TODO 9. data.results를 renderMovies()에 전달하세요.
 
-  renderMovies(data.results);
+  renderMovies(filteredMovies);
 }
 
 getTopRatedMovies();
